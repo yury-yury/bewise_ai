@@ -1,20 +1,19 @@
 from datetime import datetime
-from time import strptime
 from typing import Optional
 import aiohttp
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from db import models
-import services
-from db.sessions import get_db
 from api.schemas import Question
 
 
 PREVIOUS_QUESTION: Optional[Question] = None
 
-def get_pervious_question() -> Optional[Question]:
+
+async def get_previous_question() -> Optional[Question]:
     return PREVIOUS_QUESTION
+
 
 async def save_question(instance: models.Question, db: AsyncSession):
     global PREVIOUS_QUESTION
@@ -28,8 +27,6 @@ async def save_question(instance: models.Question, db: AsyncSession):
     async with db as db:
         db.add(instance)
         await db.commit()
-
-    print('PREVIOUS_QUESTION=', PREVIOUS_QUESTION)
 
 
 async def check_question(qid: int, db: AsyncSession) -> bool:
