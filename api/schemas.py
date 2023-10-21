@@ -17,4 +17,8 @@ class Question(BaseModel):
 
 
 class RequestBody(BaseModel):
+    """
+    The RequestBody class represents the schema for the data requested in the body of the request.
+    Inherited from the parent class BaseModel from the pydentic library.
+    """
     questions_num: int
